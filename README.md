@@ -27,12 +27,13 @@ El siguiente paso será eliminar los N/A de la base de datos.
 También tendremos que eliminar los valores que arrojan 0 en lead time, que es el tiempo desde que se hizo la reserva hasta el día del hospedaje. 
 Queremos quedarnos  solo con aquellas que tienen al menos un día.  
 
-
-
 Ahora seleccionamos las variables que usaremos en el PCA:
 
- lead_time, stays_in_weekend_nights, stays_in_week_nights.
+Lead_time, stays_in_weekend_nights, stays_in_week_nights.
  
 Luego aplicamos PCA y podemos visualizar la varianza que explica cada componente
+
+<img width="875" height="540" alt="000018" src="https://github.com/user-attachments/assets/ee5e6824-cf52-40b6-acaf-5097045449ac" />
+
 
 
