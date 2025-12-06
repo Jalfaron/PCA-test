@@ -35,5 +35,9 @@ Luego aplicamos PCA y podemos visualizar la varianza que explica cada componente
 
 <img width="875" height="540" alt="000018" src="https://github.com/user-attachments/assets/ee5e6824-cf52-40b6-acaf-5097045449ac" />
 
+Ahora podemos visualizar con biplot.
+Aquí vemos que los puntos están bastante dispersos, lo que indica que hay una variabilidad significativa en los datos.
+Además, podemos observar que las variables lead_time, stays_in_weekend_nights y stays_in_week_nights están representadas por flechas que apuntan en diferentes direcciones, lo que sugiere que estas variables no están altamente correlacionadas entre sí.
+
 
 
