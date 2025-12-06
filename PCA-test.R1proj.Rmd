@@ -1,0 +1,214 @@
+---
+title: "PCA test"
+author: "Javiera Alfaro"
+date: "2025-12-04"
+output: html_document
+---
+
+
+```{r}
+library(tidyverse)
+library(ggcorrplot)
+library(corrplot)
+library(corrr)
+library(FactoMineR)
+library(factoextra)
+library(naniar)
+library(zoo)
+library(ggrepel)
+```
+
+```{r}
+df_select <- df |>
+  select(
+    hotel,
+    lead_time,
+    arrival_date_year,
+    arrival_date_month,
+    arrival_date_week_number,
+    arrival_date_day_of_month,
+    stays_in_weekend_nights,
+    stays_in_week_nights,
+    adults,
+    children,
+    babies,
+    country,
+    market_segment,
+    reservation_status,
+    reservation_status_date,
+    city,
+  )
+```
+
+```{r}
+df_select_sin_na <- df_select |> 
+  drop_na() 
+```
+
+  
+```{r}
+df_select_sin_cero <- df_select_sin_na |> 
+  filter(lead_time > 0)
+```
+
+
+```{r}
+df_select_num <- df_select_sin_cero |> 
+  select(2, 7, 8)
+```
+
+```{r}
+df_normal <- scale(df_select_num)
+
+head(df_normal)
+```
+```{r}
+df_pca <- princomp(df_normal)
+
+summary(df_pca)
+```
+
+
+```{r}
+df_pca$loadings[, 1:1]
+```
+```{r fig.align='center'}
+fviz_eig(df_pca, addlabels = TRUE,
+         barfill = "#990066",
+         barcolor = "#990066",
+         ncp = 10,
+         xlab = "Dimensiones",
+         ylab = "Porcentaje de la varianza explicada",
+         )
+```
+```{r fig.align='center'}
+fviz_pca_biplot(df_pca, 
+                col.var = "#990066",
+                col.ind = "grey60",
+                alpha.ind = 0.1,
+                label = "var",
+                repel = T)
+```
+```{r fig.align='center'}
+fviz_cos2(df_pca, choice = "var", axes = 1:2)
+```
+```{r}
+variables <- get_pca_var(df_pca)
+```
+
+```{r fig.align='center'}
+corrplot(variables$cos2,
+         method = 'color',
+         col=c("#cc3399","#ff6600","#ff9900","#ffcc00"),
+         tl.col = "black")
+```
+```{r message=F, warning=F}
+library(stats)
+library(kableExtra)
+library(broom)
+```
+
+```{r}
+df_pca_2 <- df_normal |> 
+  prcomp()
+```
+
+```{r}
+df_pca_2 |> 
+  broom::tidy(matrix = "eigenvalues") |> 
+  kable() |> 
+  head(n = 10)
+```
+
+```{r}
+df_pca_2 |> 
+  broom::tidy(matrix = "rotation") |> 
+  kable() |> 
+  head(n = 10)
+```
+```{r eval=F}
+df_pca_2 |>
+  broom::tidy(matrix = "scores") |> 
+  pivot_wider(names_from = "PC",
+              names_prefix = "PC_",
+              values_from = "value") |>
+  kable() |> 
+  scroll_box() 
+```
+
+
+```{r}
+df_pca_2_cat <- df_pca_2 |>
+  broom::tidy(matrix = "scores") |> 
+  pivot_wider(names_from = "PC",
+              names_prefix = "PC_",
+              values_from = "value") |> 
+  bind_cols(df_select_sin_cero)
+
+head(df_pca_2_cat)
+```
+
+```{r}
+# Paleta de colores:
+
+colores_gradiente <- c("#990066", "#cc3399", "#ff6600", "#ffcc00")
+
+colores_paises <- c("#cc3399","#ff6600","#ff9900","#006699")
+
+colores_scree <- c("#99cc33", "#3399cc", "#cc3399", "#ff9900")
+
+```
+
+
+```{r fig.align='center'}
+df_pca_2_cat |> 
+  ggplot(aes(x = PC_1, y = PC_2)) +
+  geom_point(alpha = 0.5, size = 0.2) +
+  labs(x = "Componente 1 (64,5%)",
+       y = "Componente 2 (10%)") +
+  theme_linedraw() +
+  theme(legend.position = "none")
+```
+```{r fig.align='center'}
+df_pca_2_cat |> 
+  ggplot(aes(x = PC_1, y = PC_2)) +
+  geom_point(alpha = 0.5, size = 0.2) +
+  geom_density_2d(aes(color = after_stat(level)), linewidth = 0.8) +
+  scale_color_gradientn(colours = colores_gradiente) +
+  labs(x = "Componente 1 (64,5%)",
+       y = "Componente 2 (10%)") +
+  theme_linedraw() +
+  theme(legend.position = "none")
+```
+```{r}
+hoteles_seleccionados <- c("Resort Hotel - Bangalore", "Resort Hotel - Dehli", "Resort Hotel - Mumbai", "Resort Hotel - Pune")
+```
+
+
+```{r fig.align='center'}
+df_pca_2_cat |> 
+  ggplot(aes(x = PC_1, y = PC_2)) +
+  geom_point(alpha = 0.2, size = 0.2, color = "grey60") +
+  geom_text(
+    data = df_pca_2_cat |>
+      filter(city %in% hoteles_seleccionados, arrival_date_month == "september"), 
+    aes(label = city, color = city), hjust = 0.5, vjust = 0, size = 4
+  ) +
+  geom_line(
+    data = df_pca_2_cat |> 
+      filter(city %in% hoteles_seleccionados, arrival_date_month %in% c("september", "october", "november", "december", 2024)),
+    aes(group = city, color = city),
+    linewidth = 1
+  ) +
+  geom_point(
+    data = df_pca_2_cat |> 
+      filter(city %in% hoteles_seleccionados, arrival_date_month %in% c("september", "october", "november", "december", 2024)),
+    aes(color = city),
+    size = 2
+  )+
+  scale_colour_manual(values = colores_paises) +
+  labs(x = "Componente 1 (64,5%)",
+       y = "Componente 2 (10%)") +
+  theme_linedraw() +
+  theme(legend.position = "none")
+```
