@@ -27,7 +27,7 @@ El siguiente paso será eliminar los N/A de la base de datos.
 También tendremos que eliminar los valores que arrojan 0 en lead time, que es el tiempo desde que se hizo la reserva hasta el día del hospedaje. 
 Queremos quedarnos  solo con aquellas que tienen al menos un día.  
 
-### Estandarización
+
 
 Ahora seleccionamos las variables que usaremos en el PCA:
 
