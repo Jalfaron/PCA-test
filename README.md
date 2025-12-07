@@ -40,4 +40,9 @@ Aquí vemos que los puntos están bastante dispersos, lo que indica que hay una 
 Además, podemos observar que las variables lead_time, stays_in_weekend_nights y stays_in_week_nights están representadas por flechas que apuntan en diferentes direcciones, lo que sugiere que estas variables no están altamente correlacionadas entre sí.
 
 
+También podemos ver la contribución de cada variable a los componentes principales.
+Lo vemos en un gráfico de correlación, extrayendo el Cos2 desde la base de datos
+
+
+Con esto se muestra la distribución de las variables dentro de los componentes que se crearon.
 
