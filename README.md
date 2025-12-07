@@ -33,28 +33,37 @@ Lead_time, stays_in_weekend_nights, stays_in_week_nights.
  
 Luego aplicamos PCA y podemos visualizar la varianza que explica cada componente
 
-<img width="875" height="540" alt="000018" src="https://github.com/user-attachments/assets/ee5e6824-cf52-40b6-acaf-5097045449ac" />
+<img width="875" height="540" alt="00001" src="https://github.com/user-attachments/assets/cddeeb7e-46e9-47c6-a359-fc91d77e9aaf" />
+
 
 Ahora podemos visualizar con biplot.
 Aquí vemos que los puntos están bastante dispersos, lo que indica que hay una variabilidad significativa en los datos.
 Además, podemos observar que las variables lead_time, stays_in_weekend_nights y stays_in_week_nights están representadas por flechas que apuntan en diferentes direcciones, lo que sugiere que estas variables no están altamente correlacionadas entre sí.
 
 
+<img width="875" height="540" alt="00002" src="https://github.com/user-attachments/assets/81244b0e-deca-4eae-90eb-0e36cd2d28a7" />
+
 También podemos ver la contribución de cada variable a los componentes principales.
 Lo vemos en un gráfico de correlación, extrayendo el Cos2 desde la base de datos
 
+<img width="875" height="540" alt="00003" src="https://github.com/user-attachments/assets/ab9d3a6a-0cef-4d5c-b2fe-96843b16c726" />
 
 Con esto se muestra la distribución de las variables dentro de los componentes que se crearon.
 El componente 1 muestra una mayor contribución de la variable lead_time, mientras que el componente 2 está más influenciado por las variables stays_in_weekend_nights y stays_in_week_nights.
 
+<img width="875" height="540" alt="00004" src="https://github.com/user-attachments/assets/daa44da4-f0e2-431c-9852-2ca7fab1f642" />
 
 Usamos tidy de broom para ver el porcentaje de varianza explicada por cada componente principal.
 Con esto podemos observar que el primer componente principal explica aproximadamente el 70% de la varianza total en los datos, mientras que el segundo componente explica alrededor del 30%.
 Finalmente, los datos originales transformados de acuerdo a su puntaje en el PCA. 
 
+<img width="875" height="540" alt="00006" src="https://github.com/user-attachments/assets/de678cd6-5d13-477f-8689-82f0eff6740b" />
+
 Unimos los datos a nuestra base de trabajo para poder visualizar.
+
 
 Agregamos kernel density estimation y creamos un gráfico con hoteles seleccionados (Resort Hotel Bangalore, Resort Hotel Dehli, Resort Hotel Mumbai, Resort Hotel Pune)
 
 
+<img width="875" height="540" alt="00007" src="https://github.com/user-attachments/assets/8da3cbf5-2057-4e75-8bb0-551b35a4a3f7" />
 
