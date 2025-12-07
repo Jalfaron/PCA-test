@@ -45,4 +45,16 @@ Lo vemos en un gráfico de correlación, extrayendo el Cos2 desde la base de dat
 
 
 Con esto se muestra la distribución de las variables dentro de los componentes que se crearon.
+El componente 1 muestra una mayor contribución de la variable lead_time, mientras que el componente 2 está más influenciado por las variables stays_in_weekend_nights y stays_in_week_nights.
+
+
+Usamos tidy de broom para ver el porcentaje de varianza explicada por cada componente principal.
+Con esto podemos observar que el primer componente principal explica aproximadamente el 70% de la varianza total en los datos, mientras que el segundo componente explica alrededor del 30%.
+Finalmente, los datos originales transformados de acuerdo a su puntaje en el PCA. 
+
+Unimos los datos a nuestra base de trabajo para poder visualizar.
+
+Agregamos kernel density estimation y creamos un gráfico con hoteles seleccionados (Resort Hotel Bangalore, Resort Hotel Dehli, Resort Hotel Mumbai, Resort Hotel Pune)
+
+
 
